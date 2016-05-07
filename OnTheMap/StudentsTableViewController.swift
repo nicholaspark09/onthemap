@@ -8,19 +8,28 @@
 
 import UIKit
 
+@objc protocol StudentsTableProtocol{
+    func dropPin()
+}
+
 class StudentsTableViewController: UITableViewController {
 
     struct Constants{
         static let Title = "On the Map"
         static let CellReuseIdentifier = "Student Cell"
+        static let InformationPostSegue = "InformationPost Segue"
     }
     
     var students = [StudentInformation]()
-    
+    var loadingData = false
+    var moreStudents = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = Constants.Title
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Pin"), style: .Plain, target: self, action: #selector(StudentsTableProtocol.dropPin))
         indexStudents()
     }
 
@@ -37,21 +46,35 @@ class StudentsTableViewController: UITableViewController {
     }
     
     func indexStudents(){
-        ParseClient.sharedInstance().index(100, skip: 0, order: "-updatedAt"){(students,error) in
-            if students != nil{
-                print("Got back students with length \(students!.count)")
-                
-                for student in students!{
-                    self.students.append(student)
+        if loadingData == false && moreStudents == true{
+            loadingData = true
+            ParseClient.sharedInstance().index(100, skip: students.count, order: "-updatedAt"){(tempstudents,error) in
+                if tempstudents != nil{
+                    print("Got back students with length \(tempstudents!.count)")
+                    
+                    for student in tempstudents!{
+                        self.students.append(student)
+                    }
+                    if tempstudents!.count < 100{
+                        self.moreStudents = false
+                    }
+                    performOnMain(){
+                        self.tableView.reloadData()
+                    }
+                    
+                }else{
+                    performOnMain(){
+                        print(error)
+                    }
                 }
-                performOnMain(){
-                    self.tableView.reloadData()
-                }
-            }else{
-                performOnMain(){
-                    print(error)
-                }
+                self.loadingData = false
             }
+        }
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == students.count-1 {
+            indexStudents()
         }
     }
 
@@ -68,6 +91,9 @@ class StudentsTableViewController: UITableViewController {
         app.openURL(NSURL(string: student.mediaURL)!)
     }
     
+    func dropPin(){
+        performSegueWithIdentifier(Constants.InformationPostSegue, sender: nil)
+    }
 
     /*
     // Override to support conditional editing of the table view.

@@ -18,6 +18,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     struct Constants{
         static let Title = "Map"
         static let PinReuseIdentifier = "Pin"
+        static let InformationPostSegue = "InformationPost Segue"
     }
 
     @IBOutlet var mapView: MKMapView!{
@@ -75,6 +76,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     func dropPin(){
+        /*
         ParseClient.sharedInstance().find(UdacityClient.sharedInstance().accountKey!){(results,error) in
             if error != nil{
                 print("The error was \(error)")
@@ -82,6 +84,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 print("\(results!.firstName)")
             }
         }
+ */
+        performSegueWithIdentifier(Constants.InformationPostSegue, sender: nil)
     }
     
     func indexStudents(){

@@ -12,10 +12,12 @@ class StudentTableViewCell: UITableViewCell {
 
     var student: StudentInformation?{
         didSet{
-            studentLabel!.text = "\(student!.firstName) \(student!.lastName)"
+            studentLabel?.text = "\(student!.firstName) \(student!.lastName)"
+            dateLabel?.text = "\(student!.updatedAt)"
         }
     }
     
+    @IBOutlet var dateLabel: UILabel!
     @IBOutlet var studentLabel: UILabel!
     
     
