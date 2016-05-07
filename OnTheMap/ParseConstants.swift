@@ -13,7 +13,7 @@ extension ParseClient{
         static let ApiKey : String = ""
         static let ApiScheme : String = "https"
         static let ApiHost : String = "api.parse.com"
-        static let ApiPath = "/1/classes/StudentLocation"
+        static let ApiPath = "/1"
     }
     
     struct ParameterKeys{
@@ -24,11 +24,16 @@ extension ParseClient{
     
     struct Methods{
         static let Index = "/classes/StudentLocation"
+        static let Query = "/classes/StudentLocation?where={\"uniqueKey\":\"{UniqueKey}\"}"
     }
     
     struct JSONResponseKeys{
         
         // MARK: StudentInformation
         static let StudentsResults = "results"
+    }
+    
+    struct URLKeys{
+        static let UniqueKey = "UniqueKey"
     }
 }

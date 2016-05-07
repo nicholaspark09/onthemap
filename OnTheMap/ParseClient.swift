@@ -25,6 +25,11 @@ class ParseClient: NSObject{
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("The data was \(dataString)")
+            //Just so I can see the actual url on debug
+            let url = request.URL?.absoluteString
+            print("The url is \(url!)")
             func sendError(error: String){
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
@@ -125,6 +130,15 @@ class ParseClient: NSObject{
             static var sharedInstance = ParseClient()
         }
         return Singleton.sharedInstance
+    }
+    
+    // substitute the key for the value that is contained within the method name
+    func substituteKeyInMethod(method: String, key: String, value: String) -> String? {
+        if method.rangeOfString("{\(key)}") != nil {
+            return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)
+        } else {
+            return nil
+        }
     }
     
     

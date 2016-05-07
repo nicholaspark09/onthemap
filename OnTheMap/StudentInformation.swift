@@ -21,6 +21,8 @@ struct StudentInformation{
         static let MediaURL = "mediaURL"
         static let Latitude = "latitude"
         static let Longitude = "longitude"
+        static let CreatedAt = "createdAt"
+        static let UpdatedAt = "updatedAt"
     }
     
     let objectId:String
@@ -31,6 +33,8 @@ struct StudentInformation{
     let latitude: NSNumber
     let longitude: NSNumber
     var uniqueKey:String?
+    let createdAt: String
+    let updatedAt: String
     
     // MARK: Initializers
     
@@ -48,6 +52,8 @@ struct StudentInformation{
         mediaURL = dictionary[Keys.MediaURL] as! String
         latitude = dictionary[Keys.Latitude] as! NSNumber
         longitude = dictionary[Keys.Longitude] as! NSNumber
+        createdAt = dictionary[Keys.CreatedAt] as! String
+        updatedAt = dictionary[Keys.UpdatedAt] as! String
     }
     
     static func studentsFromResults(results: [[String:AnyObject]]) -> [StudentInformation] {

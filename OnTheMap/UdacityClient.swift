@@ -13,7 +13,11 @@ class UdacityClient: NSObject{
     
     var requestToken: String? = nil
     var sessionID : String? = nil
-    var userID : Int? = nil
+    //This is the actual User ID for Udacity
+    /**
+        This is poorly described in the project documentation
+        I had to try the session id first and then used the account key >:/
+    **/
     var accountKey: String?
     var sessionExpiration: String?
     

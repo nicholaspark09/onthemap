@@ -101,6 +101,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
                             }
                         }
                         performOnMain(){
+                            self.loginButton.enabled = true
                             self.errorLabel.text = ""
                         }
                     }else{
