@@ -1,5 +1,5 @@
 //
-//  UdacityClient.swift
+//  ParseClient.swift
 //  OnTheMap
 //
 //  Created by Nicholas Park on 5/7/16.
@@ -8,14 +8,7 @@
 
 import Foundation
 
-class UdacityClient: NSObject{
-
-    
-    var requestToken: String? = nil
-    var sessionID : String? = nil
-    var userID : Int? = nil
-    var accountKey: String?
-    var sessionExpiration: String?
+class ParseClient: NSObject{
     
     var session = NSURLSession.sharedSession()
     
@@ -28,6 +21,9 @@ class UdacityClient: NSObject{
     
     func httpGet(method: String, parameters: [String : AnyObject], completionHandlerForGET:(result:AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask{
         let request = NSMutableURLRequest(URL: urlFromParameters(parameters, withPathExtension: method))
+        //Must add in the keys given so that Parse knows it's from Udacity
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             func sendError(error: String){
                 print(error)
@@ -65,37 +61,31 @@ class UdacityClient: NSObject{
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            var newData = data?.subdataWithRange(NSMakeRange(5, data!.length - 5))
-            
+ 
             func sendError(error: String){
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 completionHandlerForPOST(result:nil,error: NSError(domain:"httpPost", code: 1, userInfo:userInfo))
             }
-            /**
-                Using the data with 5 characters bumped throws everything off
-                    I don't quite know what to do to get the response reading correctly
-                    The response always fails
+             
+             /* GUARD: Was there an error? */
+             guard (error == nil) else{
+             sendError("There was an error with the request: \(error)")
+             return
+             }
+             /* GUARD: did we get a successful 2XX response? */
+             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else{
+             sendError("Your request sent back a non 2xx response")
+             return
+             }
+             
+             /* GUARD: Was there any data? */
+             guard let data = data else{
+             sendError("No data sent back by request")
+             return
+             }
             
-                            /* GUARD: Was there an error? */
-                            guard (error == nil) else{
-                                sendError("There was an error with the request: \(error)")
-                                return
-                            }
-                            /* GUARD: did we get a successful 2XX response? */
-                            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else{
-                                sendError("Your request sent back a non 2xx response")
-                                return
-                            }
-                            
-                            /* GUARD: Was there any data? */
-                            guard let data = data else{
-                                sendError("No data sent back by request")
-                                return
-                            }
-            **/
-
-            self.convertDataWithCompletion(newData!, completionHandlerForConvertData: completionHandlerForPOST)
+            self.convertDataWithCompletion(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         task.resume()
         return task
@@ -130,11 +120,12 @@ class UdacityClient: NSObject{
     }
     
     // MARK: Shared Instance
-    class func sharedInstance() -> UdacityClient {
+    class func sharedInstance() -> ParseClient {
         struct Singleton{
-            static var sharedInstance = UdacityClient()
+            static var sharedInstance = ParseClient()
         }
         return Singleton.sharedInstance
     }
+    
     
 }

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF20BF351CDD7B9700F05AB9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF341CDD7B9700F05AB9 /* MapViewController.swift */; };
+		AF20BF391CDD815300F05AB9 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF381CDD815300F05AB9 /* StudentInformation.swift */; };
+		AF20BF3C1CDD882900F05AB9 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */; };
+		AF20BF3E1CDD883500F05AB9 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */; };
+		AF20BF401CDD895600F05AB9 /* ParseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3F1CDD895600F05AB9 /* ParseDB.swift */; };
 		AF93FA341CDB6F44006981ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA331CDB6F44006981ED /* AppDelegate.swift */; };
 		AF93FA391CDB6F44006981ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF93FA371CDB6F44006981ED /* Main.storyboard */; };
 		AF93FA3C1CDB6F44006981ED /* OnTheMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA3A1CDB6F44006981ED /* OnTheMap.xcdatamodeld */; };
@@ -38,6 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AF20BF341CDD7B9700F05AB9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		AF20BF381CDD815300F05AB9 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		AF20BF3F1CDD895600F05AB9 /* ParseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseDB.swift; sourceTree = "<group>"; };
 		AF93FA301CDB6F44006981ED /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF93FA331CDB6F44006981ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF93FA381CDB6F44006981ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -82,6 +92,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF20BF3A1CDD881C00F05AB9 /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */,
+				AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */,
+				AF20BF3F1CDD895600F05AB9 /* ParseDB.swift */,
+			);
+			name = Parse;
+			sourceTree = "<group>";
+		};
 		AF93FA271CDB6F43006981ED = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +161,7 @@
 		AFBCF9561CDD5F0600A7B1C2 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				AF20BF3A1CDD881C00F05AB9 /* Parse */,
 				AFBCF9571CDD5F0B00A7B1C2 /* Udacity */,
 			);
 			name = Clients;
@@ -159,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				AFBCF9541CDD5BF700A7B1C2 /* AccountViewController.swift */,
+				AF20BF341CDD7B9700F05AB9 /* MapViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -181,6 +203,7 @@
 		AFDDACF11CDD58DB00852970 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				AF20BF381CDD815300F05AB9 /* StudentInformation.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -319,12 +342,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF20BF3C1CDD882900F05AB9 /* ParseClient.swift in Sources */,
+				AF20BF391CDD815300F05AB9 /* StudentInformation.swift in Sources */,
 				AFBCF9591CDD5F6400A7B1C2 /* UdacityClient.swift in Sources */,
+				AF20BF3E1CDD883500F05AB9 /* ParseConstants.swift in Sources */,
 				AFBCF95F1CDD77B600A7B1C2 /* Helpers.swift in Sources */,
 				AFBCF95B1CDD608F00A7B1C2 /* UdacityConstants.swift in Sources */,
 				AF93FA3C1CDB6F44006981ED /* OnTheMap.xcdatamodeld in Sources */,
 				AF93FA341CDB6F44006981ED /* AppDelegate.swift in Sources */,
 				AFBCF9551CDD5BF700A7B1C2 /* AccountViewController.swift in Sources */,
+				AF20BF401CDD895600F05AB9 /* ParseDB.swift in Sources */,
+				AF20BF351CDD7B9700F05AB9 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,5 +19,11 @@ extension UdacityClient{
     struct JSONResponseKeys{
         static let StatusCode = "status"
         static let Error = "error"
+        static let Account = "account"
+        static let Session = "session"
+        static let AccountKey = "key"
+        static let SessionId = "id"
+        static let SessionExpiration = "expiration"
     }
+    
 }

@@ -18,7 +18,8 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         static let SignUpAddress = "https://www.udacity.com/account/auth#!/signup"
         static let LoginMethod = "/session"
         static let AlertTitle = "Login Error"
-        static let AlertMessage = "Reason:"
+        static let AlertMessage = "Couldn't connect to the server. Please try again"
+        static let TabViewSegue = "TabView Segue"
     }
     
 
@@ -103,7 +104,16 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
                             self.errorLabel.text = ""
                         }
                     }else{
-                        
+                        if let account = results[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject]{
+                            UdacityClient.sharedInstance().accountKey = account[UdacityClient.JSONResponseKeys.AccountKey] as? String
+                        }
+                        if let session = results[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject]{
+                            UdacityClient.sharedInstance().sessionID = session[UdacityClient.JSONResponseKeys.SessionId] as? String
+                            UdacityClient.sharedInstance().sessionExpiration = session[UdacityClient.JSONResponseKeys.SessionExpiration] as? String
+                            performOnMain(){
+                                self.performSegueWithIdentifier(AccountConstants.TabViewSegue, sender: nil)
+                            }
+                        }
                     }
                 }
             }
