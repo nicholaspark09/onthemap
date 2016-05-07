@@ -9,6 +9,11 @@
 import UIKit
 import CoreData
 
+struct AppConstants{
+    static let FLICKR_KEY = "991a7e44cb35c8ada257eebc679778de"
+    static let FLICKR_SECRET = "bf9e2cc3da5ceb00"
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
