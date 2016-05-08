@@ -20,7 +20,7 @@ extension UdacityClient{
             }
             
             guard (error == nil) else{
-                sendError("There was an error: \(error?.localizedDescription)")
+                sendError("There was an error: \(error!.localizedDescription)")
                 return
             }
 
@@ -43,6 +43,13 @@ extension UdacityClient{
             guard let results = results else{
                 sendError("No data sent back")
                 return
+            }
+            if let status = results[JSONResponseKeys.StatusCode] as? Int{
+                if status != 400 {
+                    let error = results[JSONResponseKeys.Error] as! String
+                    sendError(error)
+                    return
+                }
             }
                     if let account = results[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject]{
                         UdacityClient.sharedInstance.accountKey = account[UdacityClient.JSONResponseKeys.AccountKey] as? String

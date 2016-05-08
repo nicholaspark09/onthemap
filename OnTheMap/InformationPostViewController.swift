@@ -31,8 +31,10 @@ class InformationPostViewController: UIViewController, UITextFieldDelegate, UIPo
     }
     @IBOutlet var activityIndicator: UIActivityIndicatorView!{
         didSet{
-            activityIndicator!.hidesWhenStopped = true
-            activityIndicator.stopAnimating()
+            performOnMain(){
+                self.activityIndicator!.hidesWhenStopped = true
+                self.activityIndicator.stopAnimating()
+            }
         }
     }
     @IBOutlet var textField: UITextField!{
