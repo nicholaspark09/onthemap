@@ -46,14 +46,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         navigationItem.setRightBarButtonItems([pinButton,refreshButton], animated: true)
         let logoutButtonTitle = UdacityClient.Constants.LogoutTitle
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: logoutButtonTitle, style: .Plain, target: self, action: #selector(MapViewProtocol.logout))
-        //Pull the students right away
-        indexStudents()
+        
+        /**
+            If there are already students in the local DB then there's no need to pull until
+                the user presses refresh
+            If there are no users, then load em up!
+        **/
+        if ParseDB.sharedInstance.students.count < 1{
+            indexStudents()
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - MKMapViewDelegate Add Pin to MapView
     //Change the color of the pin here
@@ -97,7 +100,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func logout(){
         navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LoadingLabel
         navigationItem.leftBarButtonItem?.enabled = false
-        UdacityClient.sharedInstance().logout(){(loggedOut,error) in
+        UdacityClient.sharedInstance.logout(){(loggedOut,error) in
             if loggedOut{
                 performOnMain(){
                     self.dismissViewControllerAnimated(true, completion: nil)
@@ -115,50 +118,46 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func dropPin(){
-        /*
-        ParseClient.sharedInstance().find(UdacityClient.sharedInstance().accountKey!){(results,error) in
-            if error != nil{
-                print("The error was \(error)")
-            }else{
-                print("\(results!.firstName)")
-            }
-        }
- */
+
         performSegueWithIdentifier(Constants.InformationPostSegue, sender: nil)
+    }
+    
+    func addAnnotations(){
+        self.annotations = [MKPointAnnotation]()
+        for student in ParseDB.sharedInstance.students{
+            let lat = CLLocationDegrees(student.latitude as Double)
+            let long = CLLocationDegrees(student.longitude as Double)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            let first = student.firstName
+            let last = student.lastName
+            let mediaURL = student.mediaURL
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            
+            self.annotations.append(annotation)
+        }
+        performOnMain(){
+            print("You should be displaying annotations")
+            self.mapView.addAnnotations(self.annotations)
+        }
     }
     
     func indexStudents(){
         //One Pull Method at a time
         if !loading{
             loading = true
-            ParseClient.sharedInstance().index(100, skip: 0, order: "-updatedAt"){(students,error) in
+            ParseClient.sharedInstance.index(100, skip: 0, order: "-updatedAt"){(students,error) in
                 if students != nil{
-                    print("Got back students with length \(students!.count)")
                     
                     //Create temporary annotations in case you want to add more later
-                    var tempAnnotations = [MKAnnotation]()
+
                     for student in students!{
-                        let lat = CLLocationDegrees(student.latitude as Double)
-                        let long = CLLocationDegrees(student.longitude as Double)
-                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                        
-                        let first = student.firstName
-                        let last = student.lastName
-                        let mediaURL = student.mediaURL
-                        let annotation = MKPointAnnotation()
-                        annotation.coordinate = coordinate
-                        annotation.title = "\(first) \(last)"
-                        annotation.subtitle = mediaURL
-                        
-                        //Make sure this happens on the main thread
-                       
-                        tempAnnotations.append(annotation)
-                        self.annotations.append(annotation)
+                        ParseDB.sharedInstance.students.append(student)
                     }
-                    performOnMain(){
-                        print("You should be displaying annotations")
-                        self.mapView.addAnnotations(tempAnnotations)
-                    }
+                    self.addAnnotations()
                 }else{
                     performOnMain(){
                         print(error)
@@ -173,6 +172,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func refreshStudents(){
         mapView.removeAnnotations(annotations)
         annotations = [MKPointAnnotation]()
+        ParseDB.sharedInstance.students = [StudentInformation]()
         indexStudents()
     }
     

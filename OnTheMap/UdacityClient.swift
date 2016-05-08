@@ -23,10 +23,11 @@ class UdacityClient: NSObject{
     
     var session = NSURLSession.sharedSession()
     
-    
+    /*
     override init(){
         super.init()
     }
+ */
     
     // MARK: GET requests
     
@@ -155,6 +156,10 @@ class UdacityClient: NSObject{
         }
     }
     
+    /**
+        Old way of calling a Singleton
+            -- Too extraneous, however, keeping this function in case something breaks
+    //
     // MARK: Shared Instance
     class func sharedInstance() -> UdacityClient {
         struct Singleton{
@@ -162,5 +167,7 @@ class UdacityClient: NSObject{
         }
         return Singleton.sharedInstance
     }
-    
+ */
+   static let sharedInstance = UdacityClient()
+    private override init(){}
 }

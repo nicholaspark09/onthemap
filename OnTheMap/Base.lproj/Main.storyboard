@@ -274,13 +274,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="400" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Post link here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HgJ-4j-myR">
-                                <rect key="frame" x="0.0" y="59" width="400" height="100"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QcG-tC-bcH">
-                                <rect key="frame" x="293" y="21" width="101" height="30"/>
+                                <rect key="frame" x="293" y="409" width="101" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="101" id="FGc-hO-OZb"/>
                                     <constraint firstAttribute="height" constant="30" id="USH-k3-2Tb"/>
@@ -291,10 +286,7 @@
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="cw9-pB-bYA">
-                                <rect key="frame" x="0.0" y="156" width="400" height="344"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="344" id="x2n-MX-k0g"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="20" width="400" height="368"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ly-Mh-dnd">
                                 <rect key="frame" x="118" y="235" width="164" height="30"/>
@@ -307,20 +299,28 @@
                                     <action selector="submitClicked:" destination="c8O-nC-5Fs" eventType="touchUpInside" id="3s1-x6-kCN"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Post link here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HgJ-4j-myR">
+                                <rect key="frame" x="0.0" y="439" width="400" height="61"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="61" id="5RH-TT-y0Q"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Ssq-R2-axl" firstAttribute="top" secondItem="HgJ-4j-myR" secondAttribute="bottom" constant="341" id="0nP-NH-3Qd"/>
-                            <constraint firstAttribute="trailing" secondItem="HgJ-4j-myR" secondAttribute="trailing" id="Do0-zj-Ksg"/>
-                            <constraint firstItem="HgJ-4j-myR" firstAttribute="trailing" secondItem="cw9-pB-bYA" secondAttribute="trailing" id="NcN-TB-vZS"/>
-                            <constraint firstItem="7ly-Mh-dnd" firstAttribute="centerY" secondItem="juf-Ty-BSe" secondAttribute="centerY" id="VBk-DZ-PTf"/>
-                            <constraint firstItem="HgJ-4j-myR" firstAttribute="leading" secondItem="juf-Ty-BSe" secondAttribute="leading" id="Y3u-Cq-dfi"/>
-                            <constraint firstItem="QcG-tC-bcH" firstAttribute="top" secondItem="5H0-La-8fo" secondAttribute="bottom" constant="1" id="gCS-rf-fBu"/>
-                            <constraint firstItem="cw9-pB-bYA" firstAttribute="bottom" secondItem="Ssq-R2-axl" secondAttribute="top" id="h9h-pf-MwQ"/>
-                            <constraint firstItem="7ly-Mh-dnd" firstAttribute="centerX" secondItem="juf-Ty-BSe" secondAttribute="centerX" id="hMA-u7-UoK"/>
-                            <constraint firstItem="HgJ-4j-myR" firstAttribute="leading" secondItem="cw9-pB-bYA" secondAttribute="leading" id="i5s-UT-Mfh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="QcG-tC-bcH" secondAttribute="trailing" constant="-14" id="uYi-j3-Arf"/>
-                            <constraint firstItem="HgJ-4j-myR" firstAttribute="top" secondItem="QcG-tC-bcH" secondAttribute="bottom" constant="8" symbolic="YES" id="xvK-4h-DeI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QcG-tC-bcH" secondAttribute="trailing" constant="-14" id="0O4-Cd-Yuj"/>
+                            <constraint firstItem="7ly-Mh-dnd" firstAttribute="centerY" secondItem="juf-Ty-BSe" secondAttribute="centerY" id="1Wo-kI-Qsv"/>
+                            <constraint firstItem="7ly-Mh-dnd" firstAttribute="centerX" secondItem="juf-Ty-BSe" secondAttribute="centerX" id="Bvv-8m-CKW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HgJ-4j-myR" secondAttribute="trailing" constant="-20" id="CVX-G8-900"/>
+                            <constraint firstItem="HgJ-4j-myR" firstAttribute="leading" secondItem="juf-Ty-BSe" secondAttribute="leadingMargin" constant="-20" id="Icy-dd-Pw6"/>
+                            <constraint firstItem="QcG-tC-bcH" firstAttribute="top" secondItem="cw9-pB-bYA" secondAttribute="bottom" constant="21" id="Res-S1-19V"/>
+                            <constraint firstItem="cw9-pB-bYA" firstAttribute="top" secondItem="5H0-La-8fo" secondAttribute="bottom" id="Yl2-Rm-iUX"/>
+                            <constraint firstItem="Ssq-R2-axl" firstAttribute="top" secondItem="HgJ-4j-myR" secondAttribute="bottom" id="Z4t-y8-zcr"/>
+                            <constraint firstItem="HgJ-4j-myR" firstAttribute="top" secondItem="QcG-tC-bcH" secondAttribute="bottom" id="gWl-3I-Hc2"/>
+                            <constraint firstItem="cw9-pB-bYA" firstAttribute="leading" secondItem="juf-Ty-BSe" secondAttribute="leadingMargin" constant="-20" id="qza-tR-T5E"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cw9-pB-bYA" secondAttribute="trailing" constant="-20" id="yiw-PA-cbO"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

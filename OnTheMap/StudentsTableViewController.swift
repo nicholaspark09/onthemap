@@ -24,7 +24,6 @@ class StudentsTableViewController: UITableViewController {
         static let AlertButtonTitle = "OK"
     }
     
-    var students = [StudentInformation]()
     var loadingData = false
     var moreStudents = true
 
@@ -38,7 +37,15 @@ class StudentsTableViewController: UITableViewController {
         navigationItem.setRightBarButtonItems([pinButton,refreshButton], animated: true)
         let logoutButtonTitle = UdacityClient.Constants.LogoutTitle
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: logoutButtonTitle, style: .Plain, target: self, action: #selector(StudentsTableProtocol.logout))
-        indexStudents()
+        
+        //If there aren't any students, pull some from the server
+        if ParseDB.sharedInstance.students.count < 1 {
+            indexStudents()
+        }else{
+            //There are already some students (probably from the MapViewController's Index)
+            //Just load them into the table
+            tableView.reloadData()
+        }
     }
 
 
@@ -46,18 +53,18 @@ class StudentsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return students.count
+        return ParseDB.sharedInstance.students.count
     }
     
     func indexStudents(){
         if loadingData == false && moreStudents == true{
             loadingData = true
-            ParseClient.sharedInstance().index(100, skip: students.count, order: "-updatedAt"){(tempstudents,error) in
+            ParseClient.sharedInstance.index(100, skip: ParseDB.sharedInstance.students.count, order: "-updatedAt"){(tempstudents,error) in
                 if tempstudents != nil{
                     print("Got back students with length \(tempstudents!.count)")
                     
                     for student in tempstudents!{
-                        self.students.append(student)
+                        ParseDB.sharedInstance.students.append(student)
                     }
                     if tempstudents!.count < 100{
                         self.moreStudents = false
@@ -77,7 +84,7 @@ class StudentsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == students.count-1 {
+        if indexPath.row == ParseDB.sharedInstance.students.count-1 {
             indexStudents()
         }
     }
@@ -85,12 +92,12 @@ class StudentsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! StudentTableViewCell
-        cell.student = students[indexPath.row]
+        cell.student = ParseDB.sharedInstance.students[indexPath.row]
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let student = students[indexPath.row]
+        let student = ParseDB.sharedInstance.students[indexPath.row]
         let app = UIApplication.sharedApplication()
 
         let url = NSURL(string: student.mediaURL)
@@ -124,7 +131,7 @@ class StudentsTableViewController: UITableViewController {
     // Clears out information first and resets variables
     func refreshStudents(){
         //Remove the students first
-        students = [StudentInformation]()
+        ParseDB.sharedInstance.students = [StudentInformation]()
         tableView.reloadData()
         loadingData = false
         moreStudents = true
@@ -135,7 +142,7 @@ class StudentsTableViewController: UITableViewController {
     
     func logout(){
         navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LoadingLabel
-        UdacityClient.sharedInstance().logout(){(loggedOut,error) in
+        UdacityClient.sharedInstance.logout(){(loggedOut,error) in
             if loggedOut{
                 performOnMain(){
                     self.dismissViewControllerAnimated(true, completion: nil)

@@ -13,24 +13,14 @@ class ParseClient: NSObject{
     var session = NSURLSession.sharedSession()
     
     
-    
-    override init(){
-        super.init()
-    }
-    
     // MARK: GET requests
     
     func httpGet(method: String, parameters: [String : AnyObject], completionHandlerForGET:(result:AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask{
         let request = NSMutableURLRequest(URL: urlFromParameters(parameters, withPathExtension: method))
         //Must add in the keys given so that Parse knows it's from Udacity
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(Constants.ApiID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("The data was \(dataString)")
-            //Just so I can see the actual url on debug
-            let url = request.URL?.absoluteString
-            print("The url is \(url!)")
             func sendError(error: String){
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
@@ -65,8 +55,8 @@ class ParseClient: NSObject{
         request.HTTPMethod = "POST"
         request.addValue("application/json",forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(Constants.ApiID, forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
  
@@ -128,12 +118,8 @@ class ParseClient: NSObject{
     }
     
     // MARK: Shared Instance
-    class func sharedInstance() -> ParseClient {
-        struct Singleton{
-            static var sharedInstance = ParseClient()
-        }
-        return Singleton.sharedInstance
-    }
+    static let sharedInstance = ParseClient()
+    private override init(){}
     
     // substitute the key for the value that is contained within the method name
     func substituteKeyInMethod(method: String, key: String, value: String) -> String? {

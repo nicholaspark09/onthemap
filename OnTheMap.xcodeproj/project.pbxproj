@@ -13,6 +13,7 @@
 		AF20BF3E1CDD883500F05AB9 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */; };
 		AF20BF401CDD895600F05AB9 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */; };
 		AF4E15FF1CDEC6AC00D09B7E /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */; };
+		AF6FCC611CDF7DEC00E6FB59 /* ParseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6FCC601CDF7DEC00E6FB59 /* ParseDB.swift */; };
 		AF93FA341CDB6F44006981ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA331CDB6F44006981ED /* AppDelegate.swift */; };
 		AF93FA391CDB6F44006981ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF93FA371CDB6F44006981ED /* Main.storyboard */; };
 		AF93FA3C1CDB6F44006981ED /* OnTheMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA3A1CDB6F44006981ED /* OnTheMap.xcdatamodeld */; };
@@ -54,6 +55,7 @@
 		AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		AF6FCC601CDF7DEC00E6FB59 /* ParseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseDB.swift; sourceTree = "<group>"; };
 		AF93FA301CDB6F44006981ED /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF93FA331CDB6F44006981ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF93FA381CDB6F44006981ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */,
 				AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */,
 				AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */,
+				AF6FCC601CDF7DEC00E6FB59 /* ParseDB.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				AFDD37241CDDB2D100342AF9 /* StudentTableViewCell.swift in Sources */,
 				AFD809C31CDDEDAC008C0A44 /* PreviewPostViewController.swift in Sources */,
 				AFDD37221CDDB13500342AF9 /* StudentsTableViewController.swift in Sources */,
+				AF6FCC611CDF7DEC00E6FB59 /* ParseDB.swift in Sources */,
 				AF20BF3E1CDD883500F05AB9 /* ParseConstants.swift in Sources */,
 				AFBCF95F1CDD77B600A7B1C2 /* Helpers.swift in Sources */,
 				AFD809C11CDDE493008C0A44 /* InformationPostViewController.swift in Sources */,

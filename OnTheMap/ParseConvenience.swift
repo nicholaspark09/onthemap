@@ -36,12 +36,14 @@ extension ParseClient{
     
     func find(userKey: String!, completionHandlerForGet: (result: StudentInformation?, error: NSError?) -> Void){
         let params = [String:AnyObject]()
-        let uniqueKey = UdacityClient.sharedInstance().accountKey!
+        let uniqueKey = UdacityClient.sharedInstance.accountKey!
         var mutableMethod = Methods.Query
         let keyString = uniqueKey
         mutableMethod = substituteKeyInMethod(mutableMethod, key: URLKeys.UniqueKey, value: keyString)!
         httpGet(mutableMethod, parameters: params){(results,error) in
-            if let results = results[JSONResponseKeys.StudentsResults] as? [[String:AnyObject]]{
+            if error != nil{
+                completionHandlerForGet(result: nil, error: NSError(domain: "Find Method", code: 0, userInfo: [NSLocalizedDescriptionKey: "Couldn't connect: \(error!.localizedDescription)"]))
+            }else if let results = results[JSONResponseKeys.StudentsResults] as? [[String:AnyObject]]{
                 let students = StudentInformation.studentsFromResults(results)
                 if students.count > 0{
                     completionHandlerForGet(result: students[0], error: nil)
@@ -59,8 +61,9 @@ extension ParseClient{
         var params = [String:AnyObject]()
         params = [ParameterKeys.Limit : limit, ParameterKeys.Skip : skip,ParameterKeys.Order : order]
         httpGet(Methods.Index, parameters: params){(results,error) in
-            
-            if let results = results[JSONResponseKeys.StudentsResults] as? [[String:AnyObject]] {
+            if error != nil{
+                completionHandlerForIndex(result: nil, error: NSError(domain: "index Method", code: 0, userInfo: [NSLocalizedDescriptionKey: "Couldn't connect: \(error!.localizedDescription)"]))
+            }else if let results = results[JSONResponseKeys.StudentsResults] as? [[String:AnyObject]] {
                 let students = StudentInformation.studentsFromResults(results)
                 completionHandlerForIndex(result: students, error: nil)
             }else{

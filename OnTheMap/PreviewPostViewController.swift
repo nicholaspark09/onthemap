@@ -69,11 +69,6 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @IBAction func cancelClicked(sender: UIButton) {
         dismissViewControllerAnimated(true, completion: nil)
@@ -81,8 +76,8 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func submitClicked(sender: UIButton) {
 
-        let accountKey = UdacityClient.sharedInstance().accountKey!
-        UdacityClient.sharedInstance().viewProfile(){(results,error) in
+        let accountKey = UdacityClient.sharedInstance.accountKey!
+        UdacityClient.sharedInstance.viewProfile(){(results,error) in
             if let error = error{
                 performOnMain(){
                     let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
@@ -103,7 +98,7 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
                 dictionary[StudentInformation.Keys.UpdatedAt] = ""
                 dictionary[StudentInformation.Keys.ObjectId] = ""
                 
-                    ParseClient.sharedInstance().addLocation(dictionary){(result,error) in
+                    ParseClient.sharedInstance.addLocation(dictionary){(result,error) in
                         if error != nil{
                             performOnMain(){
                                 let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
@@ -119,20 +114,6 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
                     }
             }
         }
-        /*
-        let latitude = placemark!.location!.coordinate.latitude
-        let longitude = placemark!.location!.coordinate.longitude
-        ParseClient.sharedInstance().addLocation(Double(latitude), longitude: Double(longitude), mapString: self.mapString, mediaURL: linkTextField!.text!){ (student,error) in
-            
-            if let error = error{
-                let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-            }else{
-                
-            }
-        }
- */
         
     }
     /*

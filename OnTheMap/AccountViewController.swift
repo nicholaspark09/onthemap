@@ -76,7 +76,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         }else{
             loginButton.enabled = false
             errorLabel.text = AccountConstants.LoadingLabel
-            UdacityClient.sharedInstance().login(email!, password: password!){(found,error) in
+            UdacityClient.sharedInstance.login(email!, password: password!){(found,error) in
                 performOnMain(){
                     self.loginButton.enabled = true
                     self.errorLabel.text = ""

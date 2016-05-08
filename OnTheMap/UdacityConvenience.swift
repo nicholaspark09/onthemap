@@ -13,7 +13,18 @@ extension UdacityClient{
     func login(email: String, password: String, completionHandler: (found: Bool, errorString: String?) -> Void){
         let params = [String:AnyObject]()
         let jsonBody = "{\"udacity\": {\"username\":\"\(email)\",\"password\":\"\(password)\"}}"
-        UdacityClient.sharedInstance().httpPost(Methods.Login, parameters: params, jsonBody: jsonBody){ (results,error) in
+        UdacityClient.sharedInstance.httpPost(Methods.Login, parameters: params, jsonBody: jsonBody){ (results,error) in
+            
+            func sendError(error: String){
+                completionHandler(found:false, errorString: error)
+            }
+            
+            guard (error == nil) else{
+                sendError("There was an error: \(error?.localizedDescription)")
+                return
+            }
+
+            /*
             if let error = error{
                 completionHandler(found: false, errorString: error.localizedDescription)
                 print("Error: \(error)")
@@ -28,16 +39,21 @@ extension UdacityClient{
                         }
                     }
                 }else{
+            */
+            guard let results = results else{
+                sendError("No data sent back")
+                return
+            }
                     if let account = results[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject]{
-                        UdacityClient.sharedInstance().accountKey = account[UdacityClient.JSONResponseKeys.AccountKey] as? String
+                        UdacityClient.sharedInstance.accountKey = account[UdacityClient.JSONResponseKeys.AccountKey] as? String
                     }
                     if let session = results[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject]{
-                        UdacityClient.sharedInstance().sessionID = session[UdacityClient.JSONResponseKeys.SessionId] as? String
-                        UdacityClient.sharedInstance().sessionExpiration = session[UdacityClient.JSONResponseKeys.SessionExpiration] as? String
+                        UdacityClient.sharedInstance.sessionID = session[UdacityClient.JSONResponseKeys.SessionId] as? String
+                        UdacityClient.sharedInstance.sessionExpiration = session[UdacityClient.JSONResponseKeys.SessionExpiration] as? String
                         completionHandler(found: true, errorString: nil)
                     }
-                }
-            }
+            
+        
         }
     }
     
@@ -76,9 +92,9 @@ extension UdacityClient{
                 if let session = results[JSONResponseKeys.Session] as? [String:AnyObject]{
                     print("You found a session \(session[JSONResponseKeys.SessionId])")
                     //You found the return body so you have to set the account key to nil
-                    UdacityClient.sharedInstance().accountKey = nil
-                    UdacityClient.sharedInstance().sessionID = nil
-                    UdacityClient.sharedInstance().sessionExpiration = nil
+                    UdacityClient.sharedInstance.accountKey = nil
+                    UdacityClient.sharedInstance.sessionID = nil
+                    UdacityClient.sharedInstance.sessionExpiration = nil
                     completionHandlerForLogout(results: true, error: nil)
                 }
             }
@@ -95,7 +111,7 @@ extension UdacityClient{
                 completionHandler(results: nil, error: NSError(domain: "viewProfile Method", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error in viewing profile: \(error)"]))
             }else{
                 if let user = results[JSONResponseKeys.User] as? [String:AnyObject]{
-                    completionHandler(results: results[JSONResponseKeys.User], error: nil)
+                    completionHandler(results: user, error: nil)
                 }else{
                     completionHandler(results: nil, error: NSError(domain: "viewProfile Method", code: 0, userInfo: [NSLocalizedDescriptionKey: "Error in parsing the returned garble"]))
                 }

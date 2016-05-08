@@ -10,10 +10,12 @@ import Foundation
 
 extension ParseClient{
     struct Constants{
-        static let ApiKey : String = ""
+        static let ApiID : String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let ApiKey : String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         static let ApiScheme : String = "https"
         static let ApiHost : String = "api.parse.com"
         static let ApiPath = "/1"
+        
     }
     
     struct ParameterKeys{
