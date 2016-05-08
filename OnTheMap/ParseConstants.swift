@@ -36,6 +36,7 @@ extension ParseClient{
         static let StudentsResults = "results"
         static let CreatedAt = "createdAt"
         static let ObjectId = "objectId"
+        static let Error = "error"
     }
     
     struct URLKeys{

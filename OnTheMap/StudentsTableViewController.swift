@@ -60,6 +60,10 @@ class StudentsTableViewController: UITableViewController {
         if loadingData == false && moreStudents == true{
             loadingData = true
             ParseClient.sharedInstance.index(100, skip: ParseDB.sharedInstance.students.count, order: "-updatedAt"){(tempstudents,error) in
+                if error != nil{
+                    self.simpleError(error!.localizedDescription)
+                    return
+                }
                 if tempstudents != nil{
                     print("Got back students with length \(tempstudents!.count)")
                     
@@ -143,6 +147,10 @@ class StudentsTableViewController: UITableViewController {
     func logout(){
         navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LoadingLabel
         UdacityClient.sharedInstance.logout(){(loggedOut,error) in
+            if error != nil{
+                self.simpleError(error!)
+                return
+            }
             if loggedOut{
                 performOnMain(){
                     self.dismissViewControllerAnimated(true, completion: nil)

@@ -101,18 +101,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LoadingLabel
         navigationItem.leftBarButtonItem?.enabled = false
         UdacityClient.sharedInstance.logout(){(loggedOut,error) in
+            if error != nil{
+                self.simpleError(error!)
+                return
+            }
             if loggedOut{
                 performOnMain(){
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             }else{
-                performOnMain(){
-                    self.navigationItem.leftBarButtonItem?.enabled = true
-                    self.navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LogoutTitle
-                    let alert = UIAlertController(title: Constants.AlertTitle, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
+                self.simpleError("Oops. Couldn't log you out from the account")
             }
         }
     }
@@ -150,6 +148,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if !loading{
             loading = true
             ParseClient.sharedInstance.index(100, skip: 0, order: "-updatedAt"){(students,error) in
+                
+                if error != nil{
+                    self.simpleError(error!.localizedDescription)
+                    return
+                }
+                
                 if students != nil{
                     
                     //Create temporary annotations in case you want to add more later

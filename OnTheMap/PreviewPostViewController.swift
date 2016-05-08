@@ -79,13 +79,10 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
         let accountKey = UdacityClient.sharedInstance.accountKey!
         UdacityClient.sharedInstance.viewProfile(){(results,error) in
             if let error = error{
-                performOnMain(){
-                    let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-                
-            }else if let results = results{
+               self.simpleError(error.localizedDescription)
+              return
+            }
+            if let results = results{
                 var dictionary = [String:AnyObject]()
                 dictionary[StudentInformation.Keys.FirstName] = results[UdacityClient.JSONResponseKeys.FirstName]!
                 dictionary[StudentInformation.Keys.LastName] = results[UdacityClient.JSONResponseKeys.LastName]!
@@ -100,12 +97,11 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
                 
                     ParseClient.sharedInstance.addLocation(dictionary){(result,error) in
                         if error != nil{
-                            performOnMain(){
-                                let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
-                                alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
-                                self.presentViewController(alert, animated: true, completion: nil)
-                            }
-                        }else if let student = result{
+                            self.simpleError(error!)
+                            return
+                        }
+                        
+                        if let student = result{
                             self.studentInformation = student
                             performOnMain(){
                                 self.performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)

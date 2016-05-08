@@ -13,6 +13,7 @@
 		AF20BF3E1CDD883500F05AB9 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */; };
 		AF20BF401CDD895600F05AB9 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */; };
 		AF4E15FF1CDEC6AC00D09B7E /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */; };
+		AF60C0FA1CDFDF5000CBF910 /* ConvenientAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF60C0F91CDFDF5000CBF910 /* ConvenientAlert.swift */; };
 		AF6FCC611CDF7DEC00E6FB59 /* ParseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6FCC601CDF7DEC00E6FB59 /* ParseDB.swift */; };
 		AF93FA341CDB6F44006981ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA331CDB6F44006981ED /* AppDelegate.swift */; };
 		AF93FA391CDB6F44006981ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF93FA371CDB6F44006981ED /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
 		AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
 		AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
+		AF60C0F91CDFDF5000CBF910 /* ConvenientAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvenientAlert.swift; sourceTree = "<group>"; };
 		AF6FCC601CDF7DEC00E6FB59 /* ParseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseDB.swift; sourceTree = "<group>"; };
 		AF93FA301CDB6F44006981ED /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF93FA331CDB6F44006981ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				AFDD37231CDDB2D100342AF9 /* StudentTableViewCell.swift */,
+				AF60C0F91CDFDF5000CBF910 /* ConvenientAlert.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF20BF3C1CDD882900F05AB9 /* ParseClient.swift in Sources */,
+				AF60C0FA1CDFDF5000CBF910 /* ConvenientAlert.swift in Sources */,
 				AF20BF391CDD815300F05AB9 /* StudentInformation.swift in Sources */,
 				AFBCF9591CDD5F6400A7B1C2 /* UdacityClient.swift in Sources */,
 				AF4E15FF1CDEC6AC00D09B7E /* UdacityConvenience.swift in Sources */,
