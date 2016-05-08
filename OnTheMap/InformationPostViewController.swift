@@ -21,7 +21,7 @@ class InformationPostViewController: UIViewController, UITextFieldDelegate, UIPo
         static let PreviewPostSegue = "PreviewPost Segue"
     }
     
-    
+    var studentInformation: StudentInformation?
     var currentPlacemark: CLPlacemark?{
         didSet{
             performOnMain(){
@@ -108,6 +108,7 @@ class InformationPostViewController: UIViewController, UITextFieldDelegate, UIPo
     func hideKeyboard(){
         view.endEditing(true)
     }
+    
 
     
     // MARK: - Navigation
@@ -116,6 +117,7 @@ class InformationPostViewController: UIViewController, UITextFieldDelegate, UIPo
         if segue.identifier == Constants.PreviewPostSegue{
             if let ppc = segue.destinationViewController as? PreviewPostViewController{
                 ppc.placemark = currentPlacemark
+                ppc.mapString = textField.text!
                 ppc.modalPresentationStyle = UIModalPresentationStyle.Popover
                 ppc.popoverPresentationController!.delegate = self
             }

@@ -33,11 +33,15 @@ class UdacityClient: NSObject{
     func httpGet(method: String, parameters: [String : AnyObject], completionHandlerForGET:(result:AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask{
         let request = NSMutableURLRequest(URL: urlFromParameters(parameters, withPathExtension: method))
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            var newData = data?.subdataWithRange(NSMakeRange(5, data!.length - 5))
             func sendError(error: String){
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 completionHandlerForGET(result:nil,error: NSError(domain:"httpGet", code: 1, userInfo:userInfo))
             }
+            print("The response is \(response)")
+            
+            /*
             /* GUARD: Was there an error? */
             guard (error == nil) else{
                 sendError("There was an error with the request: \(error)")
@@ -54,7 +58,12 @@ class UdacityClient: NSObject{
                 sendError("No data sent back by request")
                 return
             }
-            self.convertDataWithCompletion(data, completionHandlerForConvertData: completionHandlerForGET)
+ */
+            guard let dataString = newData else{
+                sendError("No data sent back by request")
+                return
+            }
+            self.convertDataWithCompletion(dataString, completionHandlerForConvertData: completionHandlerForGET)
         }
         task.resume()
         return task
@@ -99,7 +108,11 @@ class UdacityClient: NSObject{
                             }
             **/
 
-            self.convertDataWithCompletion(newData!, completionHandlerForConvertData: completionHandlerForPOST)
+            guard let dataString = newData else{
+                sendError("No data sent back by request")
+                return
+            }
+            self.convertDataWithCompletion(dataString, completionHandlerForConvertData: completionHandlerForPOST)
         }
         task.resume()
         return task
@@ -122,7 +135,7 @@ class UdacityClient: NSObject{
     }
     
     // MARK: Convert JSON to Objects
-    private func convertDataWithCompletion(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void){
+    func convertDataWithCompletion(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void){
         var parsedResult: AnyObject!
         do{
             parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
@@ -131,6 +144,15 @@ class UdacityClient: NSObject{
             completionHandlerForConvertData(result: nil, error: NSError(domain:"convertDataWithCompletionHandler",code: 1, userInfo: userInfo))
         }
         completionHandlerForConvertData(result:parsedResult, error:nil)
+    }
+    
+    // substitute the key for the value that is contained within the method name
+    func substituteKeyInMethod(method: String, key: String, value: String) -> String? {
+        if method.rangeOfString("{\(key)}") != nil {
+            return method.stringByReplacingOccurrencesOfString("{\(key)}", withString: value)
+        } else {
+            return nil
+        }
     }
     
     // MARK: Shared Instance

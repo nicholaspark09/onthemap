@@ -15,8 +15,21 @@ import MapKit
 
 class PreviewPostViewController: UIViewController, UITextFieldDelegate {
 
+    struct Constants{
+        static let AlertTitle = "Error"
+        static let AlertButtonTitle = "Ok"
+        static let UnwindSegue = "UnwindToStudents Segue"
+    }
+    
     
     var placemark: CLPlacemark?
+    var mapString: String = ""
+    var studentInformation:StudentInformation?{
+        didSet{
+            //Just to check on log
+            print("You pushed it with an object id of \(studentInformation!.objectId) and created at \(studentInformation!.createdAt)")
+        }
+    }
     
     @IBOutlet var linkTextField: UITextField!{
         didSet{
@@ -67,19 +80,73 @@ class PreviewPostViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func submitClicked(sender: UIButton) {
-        
-        
+
+        let accountKey = UdacityClient.sharedInstance().accountKey!
+        UdacityClient.sharedInstance().viewProfile(){(results,error) in
+            if let error = error{
+                performOnMain(){
+                    let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                
+            }else if let results = results{
+                var dictionary = [String:AnyObject]()
+                dictionary[StudentInformation.Keys.FirstName] = results[UdacityClient.JSONResponseKeys.FirstName]!
+                dictionary[StudentInformation.Keys.LastName] = results[UdacityClient.JSONResponseKeys.LastName]!
+                dictionary[StudentInformation.Keys.UniqueKey] = accountKey
+                dictionary[StudentInformation.Keys.MapString] = self.mapString
+                dictionary[StudentInformation.Keys.MediaURL] = self.linkTextField!.text!
+                dictionary[StudentInformation.Keys.Latitude] = self.placemark!.location!.coordinate.latitude
+                dictionary[StudentInformation.Keys.Longitude] = self.placemark!.location!.coordinate.longitude
+                dictionary[StudentInformation.Keys.CreatedAt] = ""
+                dictionary[StudentInformation.Keys.UpdatedAt] = ""
+                dictionary[StudentInformation.Keys.ObjectId] = ""
+                
+                    ParseClient.sharedInstance().addLocation(dictionary){(result,error) in
+                        if error != nil{
+                            performOnMain(){
+                                let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
+                                alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
+                        }else if let student = result{
+                            self.studentInformation = student
+                            performOnMain(){
+                                self.performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)
+                            }
+                        }
+                    }
+            }
+        }
+        /*
+        let latitude = placemark!.location!.coordinate.latitude
+        let longitude = placemark!.location!.coordinate.longitude
+        ParseClient.sharedInstance().addLocation(Double(latitude), longitude: Double(longitude), mapString: self.mapString, mediaURL: linkTextField!.text!){ (student,error) in
+            
+            if let error = error{
+                let alert = UIAlertController(title: Constants.AlertTitle, message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }else{
+                
+            }
+        }
+ */
         
     }
     /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == Constants.UnwindSegue{
+            if let svc = segue.destinationViewController as? StudentsTableViewController{
+                
+            }
+        }
     }
-    */
+ */
     
     override var preferredContentSize: CGSize {
         get{

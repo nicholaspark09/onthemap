@@ -25,12 +25,15 @@ extension ParseClient{
     struct Methods{
         static let Index = "/classes/StudentLocation"
         static let Query = "/classes/StudentLocation?where={\"uniqueKey\":\"{UniqueKey}\"}"
+        static let Add = "/classes/StudentLocation"
     }
     
     struct JSONResponseKeys{
         
         // MARK: StudentInformation
         static let StudentsResults = "results"
+        static let CreatedAt = "createdAt"
+        static let ObjectId = "objectId"
     }
     
     struct URLKeys{

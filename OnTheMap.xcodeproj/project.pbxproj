@@ -11,7 +11,8 @@
 		AF20BF391CDD815300F05AB9 /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF381CDD815300F05AB9 /* StudentInformation.swift */; };
 		AF20BF3C1CDD882900F05AB9 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */; };
 		AF20BF3E1CDD883500F05AB9 /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */; };
-		AF20BF401CDD895600F05AB9 /* ParseDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3F1CDD895600F05AB9 /* ParseDB.swift */; };
+		AF20BF401CDD895600F05AB9 /* ParseConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */; };
+		AF4E15FF1CDEC6AC00D09B7E /* UdacityConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */; };
 		AF93FA341CDB6F44006981ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA331CDB6F44006981ED /* AppDelegate.swift */; };
 		AF93FA391CDB6F44006981ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF93FA371CDB6F44006981ED /* Main.storyboard */; };
 		AF93FA3C1CDB6F44006981ED /* OnTheMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AF93FA3A1CDB6F44006981ED /* OnTheMap.xcdatamodeld */; };
@@ -51,7 +52,8 @@
 		AF20BF381CDD815300F05AB9 /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
-		AF20BF3F1CDD895600F05AB9 /* ParseDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseDB.swift; sourceTree = "<group>"; };
+		AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConvenience.swift; sourceTree = "<group>"; };
+		AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConvenience.swift; sourceTree = "<group>"; };
 		AF93FA301CDB6F44006981ED /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF93FA331CDB6F44006981ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF93FA381CDB6F44006981ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 			children = (
 				AF20BF3B1CDD882900F05AB9 /* ParseClient.swift */,
 				AF20BF3D1CDD883500F05AB9 /* ParseConstants.swift */,
-				AF20BF3F1CDD895600F05AB9 /* ParseDB.swift */,
+				AF20BF3F1CDD895600F05AB9 /* ParseConvenience.swift */,
 			);
 			name = Parse;
 			sourceTree = "<group>";
@@ -180,6 +182,7 @@
 			children = (
 				AFBCF9581CDD5F6400A7B1C2 /* UdacityClient.swift */,
 				AFBCF95A1CDD608F00A7B1C2 /* UdacityConstants.swift */,
+				AF4E15FE1CDEC6AC00D09B7E /* UdacityConvenience.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				AF20BF3C1CDD882900F05AB9 /* ParseClient.swift in Sources */,
 				AF20BF391CDD815300F05AB9 /* StudentInformation.swift in Sources */,
 				AFBCF9591CDD5F6400A7B1C2 /* UdacityClient.swift in Sources */,
+				AF4E15FF1CDEC6AC00D09B7E /* UdacityConvenience.swift in Sources */,
 				AFDD37241CDDB2D100342AF9 /* StudentTableViewCell.swift in Sources */,
 				AFD809C31CDDEDAC008C0A44 /* PreviewPostViewController.swift in Sources */,
 				AFDD37221CDDB13500342AF9 /* StudentsTableViewController.swift in Sources */,
@@ -367,7 +371,7 @@
 				AF93FA3C1CDB6F44006981ED /* OnTheMap.xcdatamodeld in Sources */,
 				AF93FA341CDB6F44006981ED /* AppDelegate.swift in Sources */,
 				AFBCF9551CDD5BF700A7B1C2 /* AccountViewController.swift in Sources */,
-				AF20BF401CDD895600F05AB9 /* ParseDB.swift in Sources */,
+				AF20BF401CDD895600F05AB9 /* ParseConvenience.swift in Sources */,
 				AF20BF351CDD7B9700F05AB9 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

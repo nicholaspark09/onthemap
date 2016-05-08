@@ -13,6 +13,7 @@ class ParseClient: NSObject{
     var session = NSURLSession.sharedSession()
     
     
+    
     override init(){
         super.init()
     }
@@ -64,6 +65,8 @@ class ParseClient: NSObject{
         request.HTTPMethod = "POST"
         request.addValue("application/json",forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
  

@@ -192,7 +192,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="Where are you today?">
                                         <attributes>
-                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="36" name="AvenirNext-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -329,11 +329,13 @@
                         <outlet property="linkTextField" destination="HgJ-4j-myR" id="SpQ-kh-J5E"/>
                         <outlet property="mapKit" destination="cw9-pB-bYA" id="jmu-qz-RBb"/>
                         <outlet property="submitButton" destination="7ly-Mh-dnd" id="krM-15-b85"/>
+                        <segue destination="afA-Co-uj7" kind="unwind" identifier="UnwindToStudents Segue" unwindAction="unwindToStudentsTable:" id="T6K-wA-k16"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="djd-rI-9Xj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="afA-Co-uj7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4048" y="1142"/>
+            <point key="canvasLocation" x="3752" y="1210"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="EQe-sX-X2l">
@@ -381,7 +383,7 @@
                                             <attributedString key="attributedText">
                                                 <fragment content="Student">
                                                     <attributes>
-                                                        <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <font key="NSFont" size="17" name="AvenirNext-Regular"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
@@ -476,6 +478,6 @@
         <image name="Pin" width="64" height="64"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6vR-o5-V3j"/>
+        <segue reference="adS-Na-qEf"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,6 +10,8 @@ import UIKit
 
 @objc protocol StudentsTableProtocol{
     func dropPin()
+    func refreshStudents()
+    func logout()
 }
 
 class StudentsTableViewController: UITableViewController {
@@ -18,6 +20,8 @@ class StudentsTableViewController: UITableViewController {
         static let Title = "On the Map"
         static let CellReuseIdentifier = "Student Cell"
         static let InformationPostSegue = "InformationPost Segue"
+        static let AlertTitle = "Error"
+        static let AlertButtonTitle = "OK"
     }
     
     var students = [StudentInformation]()
@@ -29,14 +33,14 @@ class StudentsTableViewController: UITableViewController {
 
         title = Constants.Title
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "Pin"), style: .Plain, target: self, action: #selector(StudentsTableProtocol.dropPin))
+        let pinButton = UIBarButtonItem(image: UIImage(named: "Pin"), style: .Plain, target: self, action: #selector(StudentsTableProtocol.dropPin))
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: #selector(StudentsTableProtocol.refreshStudents))
+        navigationItem.setRightBarButtonItems([pinButton,refreshButton], animated: true)
+        let logoutButtonTitle = UdacityClient.Constants.LogoutTitle
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: logoutButtonTitle, style: .Plain, target: self, action: #selector(StudentsTableProtocol.logout))
         indexStudents()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
@@ -88,11 +92,64 @@ class StudentsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let student = students[indexPath.row]
         let app = UIApplication.sharedApplication()
-        app.openURL(NSURL(string: student.mediaURL)!)
+
+        let url = NSURL(string: student.mediaURL)
+        if url != nil && app.canOpenURL(url!) {
+            app.openURL(url!)
+        }else{
+            //Can't open the url so notify the user
+            let alert = UIAlertController(title: Constants.AlertTitle, message: "Not a valid url", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
     }
+    
+    //Drop pins on the map
     
     func dropPin(){
         performSegueWithIdentifier(Constants.InformationPostSegue, sender: nil)
+    }
+    
+    //Gets the student back from student information
+    
+    @IBAction func unwindToStudentsTable(sender: UIStoryboardSegue){
+        if let sourceViewController = sender.sourceViewController as? PreviewPostViewController{
+            let student = sourceViewController.studentInformation
+            print("The student is \(student?.firstName)")
+        }
+    }
+    
+    //Refresh Students
+    // Clears out information first and resets variables
+    func refreshStudents(){
+        //Remove the students first
+        students = [StudentInformation]()
+        tableView.reloadData()
+        loadingData = false
+        moreStudents = true
+        indexStudents()
+    }
+    
+    // MARK: Logout
+    
+    func logout(){
+        navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LoadingLabel
+        UdacityClient.sharedInstance().logout(){(loggedOut,error) in
+            if loggedOut{
+                performOnMain(){
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }else{
+                performOnMain(){
+                    self.navigationItem.leftBarButtonItem?.enabled = true
+                    self.navigationItem.leftBarButtonItem?.title = UdacityClient.Constants.LogoutTitle
+                    let alert = UIAlertController(title: Constants.AlertTitle, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: Constants.AlertButtonTitle, style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
 
     /*

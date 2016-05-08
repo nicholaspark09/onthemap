@@ -14,6 +14,17 @@ extension UdacityClient{
         static let ApiScheme : String = "https"
         static let ApiHost : String = "www.udacity.com"
         static let ApiPath = "/api"
+        static let LogoutTitle = "Logout"
+        static let LoadingLabel = "Loading..."
+    }
+    
+    struct Methods{
+        static let ViewProfile = "/users/{userid}"
+        static let Login = "/session"
+    }
+    
+    struct ParameterKeys{
+        static let UserId = "userid"
     }
     
     struct JSONResponseKeys{
@@ -24,6 +35,9 @@ extension UdacityClient{
         static let AccountKey = "key"
         static let SessionId = "id"
         static let SessionExpiration = "expiration"
+        static let User = "user"
+        static let LastName = "last_name"
+        static let FirstName = "first_name"
     }
     
 }

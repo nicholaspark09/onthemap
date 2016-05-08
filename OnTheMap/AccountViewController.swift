@@ -19,6 +19,7 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         static let LoginMethod = "/session"
         static let AlertTitle = "Login Error"
         static let AlertMessage = "Couldn't connect to the server. Please try again"
+        static let AlertButtonTitle = "OK"
         static let TabViewSegue = "TabView Segue"
     }
     
@@ -75,49 +76,25 @@ class AccountViewController: UIViewController, UITextFieldDelegate {
         }else{
             loginButton.enabled = false
             errorLabel.text = AccountConstants.LoadingLabel
-            //Log them in via POST
-            let params = [String:AnyObject]()
-            let jsonBody = "{\"udacity\": {\"username\":\"\(email!)\",\"password\":\"\(password!)\"}}"
-            UdacityClient.sharedInstance().httpPost(AccountConstants.LoginMethod, parameters: params, jsonBody: jsonBody){ (results,error) in
-                if let error = error{
-                    print("Error: \(error)")
+            UdacityClient.sharedInstance().login(email!, password: password!){(found,error) in
+                performOnMain(){
+                    self.loginButton.enabled = true
+                    self.errorLabel.text = ""
+                }
+                if found{
+                    performOnMain(){
+                        self.passwordTextField.text = ""
+                        self.performSegueWithIdentifier(AccountConstants.TabViewSegue, sender: nil)
+                    }
                 }else{
-                    print("Found results: \(results)")
-                    if let originalerror = results[UdacityClient.JSONResponseKeys.Error] as? String{
-                        if let status = results[UdacityClient.JSONResponseKeys.StatusCode] as? Int{
-                                if status >= 200 && status <= 299 {
-                                    performOnMain(){
-                                        let alert = UIAlertController(title: AccountConstants.AlertTitle, message: AccountConstants.AlertMessage, preferredStyle: UIAlertControllerStyle.Alert)
-                                        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-                                        self.presentViewController(alert, animated: true, completion: nil)
-                                    }
-                                    
-                                }else{
-                                    performOnMain(){
-                                        let alert = UIAlertController(title: AccountConstants.AlertTitle, message: originalerror, preferredStyle: UIAlertControllerStyle.Alert)
-                                        alert.addAction(UIAlertAction(title: "Ok", style: .Default,handler: nil))
-                                        self.presentViewController(alert, animated: true, completion: nil)
-                                    }
-                            }
-                        }
-                        performOnMain(){
-                            self.loginButton.enabled = true
-                            self.errorLabel.text = ""
-                        }
-                    }else{
-                        if let account = results[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject]{
-                            UdacityClient.sharedInstance().accountKey = account[UdacityClient.JSONResponseKeys.AccountKey] as? String
-                        }
-                        if let session = results[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject]{
-                            UdacityClient.sharedInstance().sessionID = session[UdacityClient.JSONResponseKeys.SessionId] as? String
-                            UdacityClient.sharedInstance().sessionExpiration = session[UdacityClient.JSONResponseKeys.SessionExpiration] as? String
-                            performOnMain(){
-                                self.performSegueWithIdentifier(AccountConstants.TabViewSegue, sender: nil)
-                            }
-                        }
+                    performOnMain(){
+                        let alert = UIAlertController(title: AccountConstants.AlertTitle, message: "\(error!)", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: AccountConstants.AlertButtonTitle, style: .Default, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
                     }
                 }
             }
+            
         }
     }
     

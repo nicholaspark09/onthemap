@@ -11,7 +11,26 @@ import Foundation
 extension ParseClient{
     
     
-    func add(){
+    func addLocation(var dictionary: [String:AnyObject], completionHandlerForAdd: (result: StudentInformation?,error: String?) -> Void){
+        let params = [String:AnyObject]()
+        let jsonBody = "{\"uniqueKey\": \"\(dictionary[StudentInformation.Keys.UniqueKey]!)\", \"firstName\": \"\(dictionary[StudentInformation.Keys.FirstName]!)\", \"lastName\": \"\(dictionary[StudentInformation.Keys.LastName]!)\",\"mapString\": \"\(dictionary[StudentInformation.Keys.MapString]!)\", \"mediaURL\": \"\(dictionary[StudentInformation.Keys.MediaURL]!)\",\"latitude\": \(dictionary[StudentInformation.Keys.Latitude]!), \"longitude\": \(dictionary[StudentInformation.Keys.Longitude]!)}"
+        print("The json body looks like : \(jsonBody)")
+        httpPost(Methods.Add, parameters: params, jsonBody: jsonBody){(results,error) in
+            if let error = error{
+                completionHandlerForAdd(result: nil, error: error.localizedDescription)
+            }else{
+                if let created = results[JSONResponseKeys.CreatedAt] as? String{
+                    dictionary[StudentInformation.Keys.CreatedAt] = created
+                    dictionary[StudentInformation.Keys.UpdatedAt] = created
+                    dictionary[StudentInformation.Keys.ObjectId] = results[JSONResponseKeys.ObjectId] as! String
+                    let student = StudentInformation.init(dictionary: dictionary)
+                    completionHandlerForAdd(result: student, error: nil)
+                }else{
+                    completionHandlerForAdd(result: nil, error: "Couldn't find the data in the results")
+                }
+            }
+        }
+
         
     }
     
