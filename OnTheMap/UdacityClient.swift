@@ -40,7 +40,7 @@ class UdacityClient: NSObject{
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 completionHandlerForGET(result:nil,error: NSError(domain:"httpGet", code: 1, userInfo:userInfo))
             }
-            print("The response is \(response)")
+
             
             /*
             /* GUARD: Was there an error? */
@@ -79,7 +79,6 @@ class UdacityClient: NSObject{
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            var newData = data?.subdataWithRange(NSMakeRange(5, data!.length - 5))
             
             func sendError(error: String){
                 print(error)
@@ -109,6 +108,7 @@ class UdacityClient: NSObject{
                             }
             **/
 
+            let newData = data?.subdataWithRange(NSMakeRange(5, data!.length - 5))
             guard let dataString = newData else{
                 sendError("No data sent back by request")
                 return
